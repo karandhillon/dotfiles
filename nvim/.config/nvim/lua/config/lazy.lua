@@ -1,3 +1,9 @@
+-- =============================================================================
+-- LAZY.NVIM BOOTSTRAPPER
+-- Location: nvim/lua/config/lazy.lua
+-- =============================================================================
+
+-- 1. Bootstrap lazy.nvim (Automatic installation if missing)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -5,7 +11,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -14,39 +20,45 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- 2. Setup plugins using the LazyVim spec
 require("lazy").setup({
   spec = {
-    -- add LazyVim and import its plugins
+    -- Core LazyVim framework and its default plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import/override with your plugins
+    -- Import your custom plugins from lua/plugins/*.lua
     { import = "plugins" },
   },
+
   defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
+    -- Plugins are NOT lazy-loaded by default (LazyVim handles loading strategy)
     lazy = false,
-    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-    -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    -- Use latest git commits for plugins (bleeding edge but usually stable)
+    version = false,
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+
+  -- 3. UI and Installation Settings
+  install = {
+    colorscheme = { "tokyonight", "habamax" }
+  },
+
+  -- 4. Automatic Update Checker
   checker = {
-    enabled = true, -- check for plugin updates periodically
-    notify = false, -- notify on update
-  }, -- automatically check for plugin updates
+    enabled = true, -- Periodically check for plugin updates
+    notify = false, -- Don't show a popup every time an update is found
+  },
+
+  -- 5. Performance Optimizations
   performance = {
     rtp = {
-      -- disable some rtp plugins
+      -- Disable built-in Vim plugins that are rarely used to speed up startup
       disabled_plugins = {
         "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
         "zipPlugin",
+        -- "matchit",    -- Uncomment if you don't use % to jump between tags
+        -- "netrwPlugin",-- Uncomment if you use a different file explorer like nvim-tree
       },
     },
   },
