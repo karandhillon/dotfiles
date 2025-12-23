@@ -1,0 +1,1 @@
+/home/karandhillon/.config/omarchy/current/theme/neovim.lua

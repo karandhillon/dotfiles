@@ -1,0 +1,4 @@
+--ignore=README.*
+--ignore=LICENSE.*
+--ignore=.git
+--ignore=.gitignore
