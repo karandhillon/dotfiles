@@ -1,0 +1,108 @@
+# tig settings
+set refresh-mode = auto
+set wrap-lines = yes
+set line-graphics = utf-8
+set commit-order = topo
+set status-show-untracked-dirs = no
+set editor-line-number = yes
+set diff-context = 5
+set vertical-split = no
+set blame-options = "-C -M"
+set main-view = line-number:no,interval=5 id:yes date:no,format="%Y-%m-%d %H:%M" author:no committer:no commit-title:yes,graph=v2,refs,overflow=no
+set git-colors = no   # let tig's own palette (below) fully drive colors
+
+# General colors
+color default                       default     default
+color cursor                        black       blue
+color status                        default     default
+color title-focus                   black       magenta
+color title-blur                    white       black
+color delimiter                     color8      default
+color header                        blue        default         bold
+color section                       magenta     default
+color line-number                   color8      default
+color id                            blue        default
+color date                          cyan        default
+color author                        magenta     default
+color mode                          yellow      default
+color overflow                      color8      default
+color directory                     green       default         bold
+color file                          default     default
+color file-size                     default     default
+
+# Main view colors
+color main.cursor                   black       blue
+color graph-commit                  magenta     default
+color main-head                     red         default         bold
+color main-remote                   green       default
+color main-tracked                  blue        default
+color main-tag                      yellow      default         bold
+color main-local-tag                yellow      default
+color main-ref                      cyan        default
+
+# Status view colors
+color status.header                 black       magenta         bold
+color status.section                magenta     default
+color stat-staged                   green       default
+color stat-unstaged                 red         default
+color stat-untracked                yellow      default
+color stat-none                     default     default
+
+# Help view colors
+color help.header                   magenta     default         bold
+color help.section                  blue        default
+color help.cursor                   black       blue
+color help-group                    magenta     default
+color help-action                   green       default
+
+# Diff view colors
+color "commit "                     yellow      default
+color "Refs: "                      magenta     default
+color "Author: "                    magenta     default
+color "AuthorDate: "                cyan        default
+color "Commit: "                    magenta     default
+color "CommitDate: "                cyan        default
+color "Merge: "                     yellow      default
+color "---"                         red         default
+color "+++ "                        green       default
+color "--- "                        red         default
+color diff-index                    color8      default
+color diff-stat                     cyan        default
+color diff-add                      green       default
+color diff-add-highlight            black       green
+color diff-del                      red         default
+color diff-del-highlight            black       red
+color diff-header                   magenta     default
+color diff-chunk                    blue        default
+color "diff-tree "                  yellow      default
+color "TaggerDate: "                cyan        default
+
+# Log view colors
+color "Date: "                      cyan        default
+
+# Signature colors
+color "gpg: "                       cyan        default
+color "Primary key fingerprint: "   cyan        default
+
+# grep view
+color grep.file                     yellow      default         bold
+color grep.line-number              color8      default         bold
+color grep.delimiter                color8      default         bold
+
+# lines in digraph
+color palette-0                     magenta     default         bold
+color palette-1                     blue        default         bold
+color palette-2                     green       default         bold
+color palette-3                     yellow      default         bold
+color palette-4                     cyan        default         bold
+color palette-5                     red         default         bold
+color palette-6                     magenta     default         bold
+color palette-7                     white       default         bold
+# repeat
+color palette-8                     magenta     default
+color palette-9                     blue        default
+color palette-10                    green       default
+color palette-11                    yellow      default
+color palette-12                    cyan        default
+color palette-13                    red         default
+

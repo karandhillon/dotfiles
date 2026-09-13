@@ -1,0 +1,8 @@
+.DS_Store
+*.swp
+*.orig
+
+# Work-specific zsh overlay — local only, never published.
+# Loaded by the ~/.zshrc.d/*.zsh drop-in loop.
+zsh/.zshrc.d/work.zsh
+zsh/.zshrc.d/android.zsh

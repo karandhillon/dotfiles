@@ -1,0 +1,262 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2153  # BORDER/BORDER_ACTIVE are color roles sourced from themes/*.conf
+set -euo pipefail
+
+# Switch the whole setup between color themes defined in bin/themes/*.conf.
+# Usage: themify <name>    (no arg = pick a theme interactively)
+
+CFG="$HOME/.config"
+THEMES_DIR="$CFG/bin/themes"
+
+SB="$CFG/sketchybar/colors.lua"
+TMUX_CONF="$CFG/tmux/tmux.conf"
+NVIM_FILE="$CFG/nvim/lua/plugins/colorscheme.lua"
+GHOSTTY="$CFG/ghostty/config"
+BORDERS="$CFG/borders/bordersrc"
+PI_SETTINGS="$HOME/.pi/agent/settings.json"   # pi lives at ~/.pi, not ~/.config
+HLCHUNK="$CFG/nvim/lua/plugins/hlchunk.lua"
+BAT="$CFG/bat/config"
+BTOP="$CFG/btop/btop.conf"
+YAZI_THEME="$CFG/yazi/theme.toml"
+HUNK="$CFG/hunk/config.toml"
+LAZYGIT="$CFG/lazygit/config.yml"
+OBSIDIAN="$HOME/obsidian-vault/.obsidian/appearance.json"
+OPENCODE_TUI="$CFG/opencode/tui.json"
+GITCONFIG="$HOME/.gitconfig"
+VIMRC="$HOME/.vimrc"
+
+warn() { printf '\033[33m⚠ %s\033[0m\n' "$*" >&2; }
+usage() { warn "usage: themify [$(IFS='|'; echo "${themes[*]}")]"; }
+
+r() { # resolve a target through symlinks so BSD sed -i can edit it (stow-safe);
+  # pass the path through untouched when the file doesn't exist (warned later)
+  if [[ -e "$1" ]]; then
+    realpath "$1"
+  else
+    printf '%s\n' "$1"
+  fi
+}
+
+# anchor <regex> <file> <label> : 0 if editable, else warn + non-zero (skip sed)
+anchor() {
+  if [[ ! -f "$2" ]]; then
+    warn "$3: fichier absent ($2)"
+    return 1
+  fi
+  if ! grep -qE "$1" "$2"; then
+    warn "$3: anchor introuvable dans $2 — non appliqué"
+    return 1
+  fi
+  return 0
+}
+
+# resolve theme list
+themes=()
+for f in "$THEMES_DIR"/*.conf; do
+  [[ -f "$f" ]] || continue
+  themes+=("$(basename "$f" .conf)")
+done
+[[ ${#themes[@]} -gt 0 ]] || {
+  warn "no themes in $THEMES_DIR"
+  exit 1
+}
+
+target="${1:-}"
+if [[ -z "$target" ]]; then
+  # no argument: pick interactively (needs a tty — Raycast & co must pass a name)
+  if [[ ! -t 0 ]]; then
+    warn "no theme given and no interactive terminal"
+    usage
+    exit 1
+  fi
+  if command -v gum >/dev/null 2>&1; then
+    # legend: every theme dot in its own accent color
+    printf '\033[2mthemes:\033[0m\n'
+    for f in "$THEMES_DIR"/*.conf; do
+      # shellcheck disable=SC1090
+      acc=$( (source "$f"; printf '%s' "$ACCENT") 2>/dev/null )
+      printf '  '
+      gum style --foreground "${acc:-#888888}" --bold "● $(basename "$f" .conf)"
+    done
+    printf '\n'
+    target=$(gum choose --header "pick a theme" "${themes[@]}") || exit 1
+  elif command -v fzf >/dev/null 2>&1; then
+    target=$(printf '%s\n' "${themes[@]}" | fzf --prompt='theme > ') || exit 1
+  else
+    printf 'themes:\n'
+    for i in "${!themes[@]}"; do
+      printf '  %d) %s\n' "$((i + 1))" "${themes[$i]}"
+    done
+    read -r -p "select theme [1-${#themes[@]}]: " reply
+    if [[ "$reply" =~ ^[0-9]+$ ]] && (( reply >= 1 && reply <= ${#themes[@]} )); then
+      target="${themes[$((reply - 1))]}"
+    else
+      warn "invalid selection: ${reply:-<empty>}"
+      exit 1
+    fi
+  fi
+fi
+
+if [[ ! -f "$THEMES_DIR/$target.conf" ]]; then
+  usage
+  exit 1
+fi
+
+# shellcheck disable=SC1090
+source "$THEMES_DIR/$target.conf"
+
+# the conf must define every color role — fail fast with a clear message,
+# before touching any target, instead of dying mid-switch on a cryptic
+# "unbound variable"
+for role in BG BG_ALT BG_SEL FG FG_MUTED BORDER ACCENT ACCENT_2 \
+             ERROR WARN OK INFO RED GREEN BLUE YELLOW ORANGE MAGENTA CYAN PURPLE \
+             SAGE ROSE GOLD PEACH TEAL STEEL SHADOW HIGHLIGHT BG2 BAR_BORDER \
+             POPUP_BG POPUP_BORDER; do
+  if [[ -z "${!role:-}" ]]; then
+    warn "$target.conf is missing color role: $role"
+    exit 1
+  fi
+done
+
+# derived tool formats from the color roles
+BORDER_ACTIVE="gradient(top_left=0xFF${ACCENT#\#},bottom_right=0xFF${ACCENT_2#\#})" # jankyborders diagonal gradient, AARRGGBB
+
+# --- sketchybar ---
+if anchor '^local theme = "[^"]*"' "$SB" 'sketchybar'; then
+  sed -i '' -E "s|^local theme = \"[^\"]*\"|local theme = \"$target\"|" "$(r "$SB")"
+  if command -v sketchybar >/dev/null 2>&1; then
+    sketchybar --reload >/dev/null 2>&1 || true
+  fi
+fi
+
+# --- tmux ---
+if anchor 'set -g mode-style "[^"]*"' "$TMUX_CONF" 'tmux mode-style'; then
+  sed -i '' -E "s|set -g mode-style \"[^\"]*\"|set -g mode-style \"fg=$FG,bg=$BG_SEL\"|" "$(r "$TMUX_CONF")"
+fi
+if anchor 'set -g pane-border-style "fg=[^"]*"' "$TMUX_CONF" 'tmux pane-border'; then
+  sed -i '' -E "s|set -g pane-border-style \"fg=[^\"]*\"|set -g pane-border-style \"fg=$BORDER\"|" "$(r "$TMUX_CONF")"
+fi
+if anchor 'set -g pane-active-border-style "fg=[^"]*"' "$TMUX_CONF" 'tmux pane-active-border'; then
+  sed -i '' -E "s|set -g pane-active-border-style \"fg=[^\"]*\"|set -g pane-active-border-style \"fg=$BORDER\"|" "$(r "$TMUX_CONF")"
+fi
+if tmux info >/dev/null 2>&1; then
+  tmux source-file "$TMUX_CONF" >/dev/null 2>&1 || true
+fi
+
+# --- nvim ---
+if anchor 'colorscheme = "[a-zA-Z-]+"' "$NVIM_FILE" 'nvim'; then
+  sed -i '' -E "s/colorscheme = \"[a-zA-Z-]+\"/colorscheme = \"$target\"/" "$(r "$NVIM_FILE")"
+fi
+# live-switch every running nvim (mode-safe, no keystrokes)
+while IFS= read -r sock; do
+  [[ -S "$sock" ]] || continue
+  nvim --server "$sock" --remote-expr "execute('colorscheme $target')" >/dev/null 2>&1 || true
+done < <(find "${TMPDIR:-/tmp}" -maxdepth 3 -name 'nvim.*.0' 2>/dev/null)
+
+# --- nvim hlchunk (single active color per block, persisted; next nvim launch) ---
+if anchor 'fg = "#[0-9A-Fa-f]{6}"' "$HLCHUNK" 'hlchunk'; then
+  sed -i '' -E "s|fg = \"#[0-9A-Fa-f]{6}\"|fg = \"$ACCENT\"|g" "$(r "$HLCHUNK")"
+fi
+
+# --- vim (applies on next vim launch) ---
+if anchor '^colorscheme ' "$VIMRC" 'vim'; then
+  sed -i '' -E "s|^colorscheme .*|colorscheme $target|" "$(r "$VIMRC")"
+fi
+
+# --- bat (next invocation picks it up) ---
+if anchor '^--theme=' "$BAT" 'bat'; then
+  sed -i '' -E "s|^--theme=\".*\"|--theme=\"$target\"|" "$(r "$BAT")"
+fi
+
+# --- btop (applies on next launch) ---
+if anchor '^color_theme = ' "$BTOP" 'btop'; then
+  sed -i '' -E "s|^color_theme = \".*\"|color_theme = \"$CFG/btop/themes/$target.theme\"|" "$(r "$BTOP")"
+fi
+
+# --- yazi / hunk / lazygit: swap the whole theme file (applies on next launch) ---
+swap_theme() { # src dest label
+  if [[ -f "$1" ]]; then
+    cp "$1" "$(r "$2")"
+  else
+    warn "$3: variante absente ($1)"
+  fi
+}
+swap_theme "$CFG/yazi/themes/$target.toml" "$YAZI_THEME" 'yazi'
+swap_theme "$CFG/hunk/$target.toml" "$HUNK" 'hunk'
+swap_theme "$CFG/lazygit/$target.yml" "$LAZYGIT" 'lazygit'
+swap_theme "$CFG/fzf/$target.fzf" "$CFG/fzf/current.fzf" 'fzf'
+
+# --- obsidian (applies on restart/refocus) ---
+if anchor '"cssTheme":' "$OBSIDIAN" 'obsidian'; then
+  sed -i '' -E "s|\"cssTheme\": \"[^\"]*\"|\"cssTheme\": \"$target\"|" "$(r "$OBSIDIAN")"
+fi
+
+# --- opencode (applies on next launch) ---
+if anchor '"theme":' "$OPENCODE_TUI" 'opencode'; then
+  sed -i '' -E "s|\"theme\": \"[^\"]*\"|\"theme\": \"$target\"|" "$(r "$OPENCODE_TUI")"
+fi
+
+# --- git-delta: swap the included palette gitconfig (next diff) ---
+if anchor 'path = .*/git/.*\.gitconfig' "$GITCONFIG" 'git-delta'; then
+  sed -i '' -E "s|^([[:space:]]*path = ).*/git/.*\.gitconfig|\1~/.config/git/$target.gitconfig|" "$(r "$GITCONFIG")"
+fi
+
+# --- pi (applies on next launch) ---
+if anchor '"theme": "[^"]*"' "$PI_SETTINGS" 'pi'; then
+  sed -i '' -E "s|\"theme\": \"[^\"]*\"|\"theme\": \"$target\"|" "$(r "$PI_SETTINGS")"
+fi
+
+# --- ghostty (each theme file embeds its own background) ---
+if anchor '^theme = ' "$GHOSTTY" 'ghostty theme'; then
+  sed -i '' -E "s|^theme = .*|theme = $target|" "$(r "$GHOSTTY")"
+fi
+# reload the running (frontmost) ghostty via its reload_config keybind (super+shift+,)
+if ! osascript -e 'tell application "System Events" to key code 43 using {command down, shift down}' >/dev/null 2>&1; then
+  echo "  ghostty: reload manually with cmd+shift+, (grant Accessibility to Ghostty to automate)"
+fi
+
+# --- jankyborders ---
+if anchor '^[[:space:]]*active_color=' "$BORDERS" 'borders'; then
+  sed -i '' -E "s|^([[:space:]]*)active_color=.*|\1active_color=\"$BORDER_ACTIVE\"|" "$(r "$BORDERS")"
+fi
+# only talk to a live daemon: with no instance running, `borders <arg>` becomes
+# the daemon itself and its whole config is that one arg, dropping the whitelist.
+# bordersrc already holds the new color, so the next proper launch picks it up.
+if pgrep -x borders >/dev/null 2>&1; then
+  borders active_color="$BORDER_ACTIVE" >/dev/null 2>&1 || true
+fi
+
+# --- wallpaper (convention: wallpapers/<theme>.* — absent means no wallpaper) ---
+CURRENT_WP="$CFG/wallpapers/current-theme.jpg"
+wp=""
+if [[ -d "$CFG/wallpapers" ]]; then
+  # find can fail (missing dir, permissions) — never let it kill the run under pipefail
+  wp=$(find "$CFG/wallpapers" -maxdepth 1 -name "$target.*" ! -name 'current-theme.*' 2>/dev/null | head -1) || wp=""
+fi
+if [[ -n "$wp" ]]; then
+  if cp "$wp" "$(r "$CURRENT_WP")" 2>/dev/null; then
+    killall WallpaperAgent 2>/dev/null || true
+  else
+    warn "wallpaper: copie échouée vers $CURRENT_WP"
+  fi
+fi
+
+# --- report ---
+if command -v gum >/dev/null 2>&1; then
+  # palette preview: raw truecolor escapes (gum strips styles from captured
+  # or nested output, so swatches and the theme name are built directly)
+  h2r() { local h="${1#\#}"; printf '%d;%d;%d' $((16#${h:0:2})) $((16#${h:2:2})) $((16#${h:4:2})); }
+  swatches=""
+  for c in "$BG" "$BG_ALT" "$FG" "$ACCENT" "$ACCENT_2" "$OK" "$WARN" "$ERROR" "$INFO"; do
+    swatches+=$(printf '\033[48;2;%sm  \033[0m ' "$(h2r "$c")")
+  done
+  name=$(printf '\033[1m\033[38;2;%sm%s\033[0m' "$(h2r "$ACCENT")" "$target")
+  gum style --border rounded --border-foreground "$ACCENT" \
+    --align left --padding "0 2" --margin "1 0" \
+    "theme → $name" \
+    "$swatches  live: bar · tmux selection · border gradient · ghostty (⌘⇧,)" \
+    "next launch: pi · vim, bat, yazi, lazygit (if ever adopted)"
+else
+  echo "theme -> $target"
+  echo "ghostty: reload with cmd+shift+,"
+fi

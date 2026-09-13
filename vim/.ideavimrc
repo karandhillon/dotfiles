@@ -1,0 +1,7 @@
+" ── Line Numbers ──────────────────────────────────────────
+set number           " show absolute line number on current line
+set relativenumber   " show relative line numbers for all other lines
+
+" ── Insert Mode Shortcuts ──────────────────────────────────
+" jj to exit insert mode (Esc still works)
+inoremap jj <Esc>

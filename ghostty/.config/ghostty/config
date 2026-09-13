@@ -1,0 +1,41 @@
+theme = sora
+
+# Font
+font-family = Google Sans Code
+font-variation = wght=350
+font-variation-italic = wght=350
+font-variation-bold = wght=800
+font-variation-bold-italic = wght=800
+font-size = 18
+font-feature = ss01
+adjust-cell-height = 20%
+adjust-cursor-height = 20%
+font-synthetic-style = false
+font-style-bold = false
+
+# Window
+# NOTE: ~/.config/ghostty is a symlink into ~/dotfiles, which breaks Ghostty's config file-watcher — hot-reload doesn't work, so reload manually with cmd+shift+comma.
+title = " "
+macos-option-as-alt            = true
+macos-titlebar-proxy-icon = hidden
+macos-titlebar-style = hidden
+macos-window-shadow = false
+# Padding must stay in sync with the per-side padding in yabai/yabairc, or you get a dead pixel strip under the last row.
+window-padding-x = 10
+window-padding-y = 10,0
+window-padding-color = extend
+window-save-state = always
+
+# Cursor
+cursor-style = block
+cursor-style-blink = true
+cursor-opacity = 0.8
+cursor-invert-fg-bg = true
+shell-integration-features = no-cursor
+
+# Misc
+copy-on-select = clipboard
+mouse-hide-while-typing = true
+adjust-underline-position = 3
+keybind = cmd+shift+comma=reload_config
+custom-shader = shaders/cursor_tail.glsl
