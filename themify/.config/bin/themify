@@ -137,7 +137,7 @@ if anchor 'set -g pane-border-style "fg=[^"]*"' "$TMUX_CONF" 'tmux pane-border';
   sed -i '' -E "s|set -g pane-border-style \"fg=[^\"]*\"|set -g pane-border-style \"fg=$BORDER\"|" "$(r "$TMUX_CONF")"
 fi
 if anchor 'set -g pane-active-border-style "fg=[^"]*"' "$TMUX_CONF" 'tmux pane-active-border'; then
-  sed -i '' -E "s|set -g pane-active-border-style \"fg=[^\"]*\"|set -g pane-active-border-style \"fg=$BORDER\"|" "$(r "$TMUX_CONF")"
+  sed -i '' -E "s|set -g pane-active-border-style \"fg=[^\"]*\"|set -g pane-active-border-style \"fg=$ACCENT\"|" "$(r "$TMUX_CONF")"
 fi
 if tmux info >/dev/null 2>&1; then
   tmux source-file "$TMUX_CONF" >/dev/null 2>&1 || true
