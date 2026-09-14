@@ -3,10 +3,12 @@
 # NOTE: brew refuses 3rd-party taps until trusted. Before the first bundle run:
 #   brew trust asmvik/formulae
 #   brew trust felixkratz/formulae
+#   brew trust jetbrains/utils
 
 # ── taps ────────────────────────────────────────────────────────────────────
 tap "asmvik/formulae"      # yabai fork (no-SIP) + skhd
 tap "felixkratz/formulae"  # sketchybar + borders
+tap "jetbrains/utils"      # kotlin-lsp (official JetBrains Kotlin LSP)
 
 # ── window manager stack ────────────────────────────────────────────────────
 brew "asmvik/formulae/yabai"
@@ -56,6 +58,11 @@ brew "lua"
 # NOT brew — see mise/.config/mise/config.toml. mise itself is the only brew
 # formula in this category.
 brew "mise"
+
+# ── LSP servers (brew-managed, on PATH for nvim) ────────────────────────────────
+# JetBrains' official Kotlin LSP (IntelliJ engine). Pre-alpha but weekly
+# releases; binary = brew symlink 'kotlin-lsp' → intellij-server.
+brew "kotlin-lsp"
 
 # ── apps ────────────────────────────────────────────────────────────────────
 cask "ghostty"

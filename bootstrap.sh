@@ -59,7 +59,8 @@ begin "trust third-party taps"
 rc=0
 brew trust asmvik/formulae >/dev/null 2>&1 || rc=1
 brew trust felixkratz/formulae >/dev/null 2>&1 || rc=1
-finish $rc "asmvik (yabai fork, skhd) + felixkratz (sketchybar, borders)"
+brew trust jetbrains/utils >/dev/null 2>&1 || rc=1
+finish $rc "asmvik (yabai fork, skhd) + felixkratz (sketchybar, borders) + jetbrains (kotlin-lsp)"
 
 # ── 3. packages ─────────────────────────────────────────────────────────────
 begin "brew bundle (packages, apps, fonts)"
