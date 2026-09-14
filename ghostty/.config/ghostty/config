@@ -1,13 +1,12 @@
 theme = sora
 
-# Font
-font-family = Google Sans Code
-font-variation = wght=350
-font-variation-italic = wght=350
-font-variation-bold = wght=800
-font-variation-bold-italic = wght=800
+# Font — JetBrainsMono Nerd Font Mono: the "Mono" variant keeps every
+# glyph (icons included) on the terminal grid. Installed via Brewfile cask.
+# Icons (tmux tokyo-night bar, etc.) render from this font — Google Sans
+# Code had no icon glyphs and macOS font-fallback made them look padded.
+# Lighter/heavier faces available by naming them (e.g. "... Mono Light").
+font-family = JetBrainsMono Nerd Font Mono
 font-size = 18
-font-feature = ss01
 adjust-cell-height = 20%
 adjust-cursor-height = 20%
 font-synthetic-style = false

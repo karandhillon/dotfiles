@@ -75,4 +75,5 @@ cask "handy"              # speech to text
 # font-sf-pro/-mono casks are also broken on Tahoe: Apple's DMGs hit the
 # hdiutil "Resource busy" bug.)
 cask "font-sketchybar-app-font"    # app icons in the spaces item
+cask "font-jetbrains-mono-nerd-font" # ghostty + tmux icon glyphs (Nerd Font)
 # Google Sans Code (ghostty's font) ships in this repo: fonts/ package.
