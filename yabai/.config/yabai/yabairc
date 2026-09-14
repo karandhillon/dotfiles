@@ -14,13 +14,14 @@ yabai -m config external_bar main:40:0
 # top_padding is measured below the external_bar reserve, so windows sit at 40+10=50pt.
 # Paddings are grid-aligned: the cell at font-size 18 + adjust-cell-height 20%
 # is 11x27pt, so the Ghostty window must leave a multiple of 27pt vertically
-# (minus Ghostty's own 10pt top padding) and a multiple of 11pt horizontally:
-#   (1117 - 40 - 10 - bottom - 10) % 27 == 0  ->  bottom = 4   (39 rows)
+# (Ghostty's top padding is 0 — the tmux bar sits flush there — so the 10pt
+# it used to carry lives here at the bottom) and a multiple of 11pt horizontally:
+#   (1117 - 40 - 10 - bottom - 0) % 27 == 0  ->  bottom = 14  (39 rows)
 #   (1728 - left - right - 20)     % 11 == 0  ->  7/7          (154 cols)
 yabai -m config left_padding 7
 yabai -m config right_padding 7
 yabai -m config top_padding 10
-yabai -m config bottom_padding 4
+yabai -m config bottom_padding 14
 yabai -m config window_gap 10
 
 # mouse
