@@ -21,6 +21,12 @@ export PATH="$PATH:$ANDROID_HOME/Emulator"
 export PATH="$PATH:$HOME/bin"
 export PATH="$PATH:$HOME/.config/bin"   # themify + friends
 
+# mise shims — lets non-interactive shells (nvim's tree-sitter calls, scripts,
+# tmux panes) resolve mise-managed tools (node, npm:* CLIs) without waiting
+# for the full `mise activate` in .zshrc. Harmless in interactive shells too:
+# activation prepends the real install dirs ahead of the shims.
+export PATH="$PATH:$HOME/.local/share/mise/shims"
+
 # plain environment for tools and scripts
 export JAVA_HOME="$(/usr/libexec/java_home)"
 export EDITOR="vim"

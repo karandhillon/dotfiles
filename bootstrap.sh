@@ -112,7 +112,20 @@ if [[ -n "$tpm" ]]; then
   fi
 fi
 
-# ── 7. services ─────────────────────────────────────────────────────────────
+# ── 7. mise tools (node, npm CLIs — versions in mise/.config/mise/config.toml) ─
+# mise itself comes from the Brewfile (step 3); its config is stowed (step 4).
+# `mise install` reads the stowed config and installs anything missing —
+# idempotent, like `brew bundle`. Tool versions are pinned in the repo, not
+# imperatively installed.
+begin "mise tools (node, tree-sitter-cli, …)"
+if command -v mise >/dev/null 2>&1; then
+  out="$(mise install 2>&1)"; rc=$?
+  finish $rc "$(mise ls --current 2>/dev/null | awk '{printf "%s ", $1}' | sed 's/ $//')"
+else
+  finish 1 "mise missing — brew bundle step failed?"
+fi
+
+# ── 8. services ─────────────────────────────────────────────────────────────
 begin "start services (sketchybar, borders, yabai, skhd)"
 note=""
 rc=0
@@ -129,7 +142,7 @@ for s in yabai skhd; do
 done
 finish $rc "$note"
 
-# ── 8. report ───────────────────────────────────────────────────────────────
+# ── 9. report ───────────────────────────────────────────────────────────────
 printf '\n%s────────────────────────────────── REPORT ──────────────────────────────────%s\n' "$B" "$N"
 passed=0; failed=0; skipped=0
 for i in $(seq 1 "$COUNT"); do

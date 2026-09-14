@@ -1,0 +1,13 @@
+# mise — dev tool versions (the "Brewfile" for language runtimes + CLIs).
+# Managed by mise; installed by bootstrap.sh via `mise install`.
+# Add a tool:      mise use -g <tool>@<version>   (or ubi:<owner>/<repo> for
+#                   GitHub-release binaries — preferred for native CLIs)
+# Remove a tool:   mise rm <tool>
+#
+# NOTE on npm: tools — mise's npm backend SKIPS lifecycle scripts (security
+# default), which breaks packages that fetch a native binary at install time
+# (e.g. tree-sitter-cli). Use the `ubi:` backend for those instead.
+
+[tools]
+node = "22"                     # active LTS
+"ubi:tree-sitter/tree-sitter" = "latest"  # nvim-treesitter parser builds

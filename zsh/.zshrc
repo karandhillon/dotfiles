@@ -32,24 +32,11 @@ HISTSIZE=50000
 SAVEHIST=50000
 setopt share_history hist_ignore_dups hist_ignore_space hist_reduce_blanks
 
-# nvm, loaded on first use — saves ~600ms on every shell start. The first
-# node/npm/yarn/npx/corepack/nvm call pays a one-time load; PATH is fixed up
-# in the current shell at that moment.
-export NVM_DIR="$HOME/.nvm"
-lazy_nvm() {
-  local c
-  for c in nvm node npm npx yarn corepack; do
-    (( $+functions[$c] )) && unfunction "$c"
-  done
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-}
-nvm()      { lazy_nvm; nvm "$@"; }
-node()     { lazy_nvm; node "$@"; }
-npm()      { lazy_nvm; npm "$@"; }
-npx()      { lazy_nvm; npx "$@"; }
-yarn()     { lazy_nvm; yarn "$@"; }
-corepack() { lazy_nvm; corepack "$@"; }
+# mise — manages node + other dev tool versions (see mise/.config/mise/config.toml).
+# Replaces nvm: no lazy-loading hack needed, activation is single-digit ms.
+# Interactive shells get dynamic per-directory PATH; non-interactive shells
+# use the shims dir put on PATH in .zshenv.
+eval "$(mise activate zsh)"
 
 # ── zoxide: smarter cd (must come after compinit; docs' requirement) ───────
 # cd keeps all normal behavior (~, .., -) and additionally jumps to

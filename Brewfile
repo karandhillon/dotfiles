@@ -51,6 +51,12 @@ brew "switchaudio-osx"    # sketchybar volume widget
 # ── sketchybar runtime ──────────────────────────────────────────────────────
 brew "lua"
 
+# ── dev toolchain (mise) ─────────────────────────────────────────────────────
+# Language runtimes + npm CLIs (node, tree-sitter-cli, …) are managed by mise,
+# NOT brew — see mise/.config/mise/config.toml. mise itself is the only brew
+# formula in this category.
+brew "mise"
+
 # ── apps ────────────────────────────────────────────────────────────────────
 cask "ghostty"
 cask "handy"              # speech to text
