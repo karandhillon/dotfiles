@@ -39,6 +39,7 @@ brew "rsync"
 brew "socat"
 brew "fswatch"
 brew "neovim"
+brew "hunk"
 
 # ── capture / media (screengif, screenshots, bar volume widget) ────────────
 brew "ffmpeg"
