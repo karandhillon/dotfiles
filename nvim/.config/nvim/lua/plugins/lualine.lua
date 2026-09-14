@@ -1,14 +1,16 @@
 -- lualine — statusline worth reading: mode, git branch, file, LSP
 -- diagnostics, position. Theme matches the editor (tokyonight).
--- icons off: the terminal font (Google Sans Code) is not a Nerd Font,
--- so icon glyphs would render as tofu boxes.
+-- Icons on: the terminal font is JetBrainsMono Nerd Font (all icon
+-- codepoints verified present) — the old tofu-box blocker is gone.
+-- nvim-web-devicons supplies the per-filetype glyph.
 return {
   "nvim-lualine/lualine.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
   event = "VeryLazy",
   opts = {
     options = {
       theme = "tokyonight",
-      icons_enabled = false,
+      icons_enabled = true,
       component_separators = { left = "│", right = "│" },
       section_separators = {},
     },
