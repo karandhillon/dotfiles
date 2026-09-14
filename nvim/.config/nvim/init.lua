@@ -4,6 +4,12 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Line numbers: hybrid mode — current line shows its absolute number,
+-- every other line shows distance from cursor (jumps like 5j / d7d become
+-- readable at a glance)
+vim.opt.number = true
+vim.opt.relativenumber = true
+
 -- Escape insert mode with jj
 vim.keymap.set("i", "jj", "<Esc>")
 
