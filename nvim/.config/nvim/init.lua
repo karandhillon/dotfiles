@@ -10,6 +10,10 @@ vim.g.maplocalleader = " "
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- Sync yank/paste with the macOS clipboard (⌘C/⌘V world). nvim shells out
+-- to pbcopy/pbpaste (built into macOS) as its clipboard provider.
+vim.opt.clipboard = "unnamedplus"
+
 -- Escape insert mode with jj
 vim.keymap.set("i", "jj", "<Esc>")
 
