@@ -88,9 +88,9 @@ Each theme defines three semantic layers, not just 16 raw colors:
 
 ## Known gaps / improvement backlog
 
-1. **fonts not managed**: colors only. Candidates for a fonts layer:
-   ghostty (Google Sans Code), sketchybar (SF Pro via helpers/default_font),
-   nerd-font fallbacks (Hack/JetBrainsMono casks exist).
+1. **fonts not managed**: colors only. The terminal font IS managed now
+   (JetBrainsMono Nerd Font, Brewfile cask); candidates for a fonts layer:
+   sketchybar (SF Pro via helpers/default_font).
 2. **`~/.config/bin` not on PATH** — `themify` only works via Raycast or full
    path. Add to PATH in zsh package (S12).
 3. ~~palette duplication~~ RESOLVED: sketchybar reads the conf at runtime

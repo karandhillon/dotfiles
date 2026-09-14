@@ -27,9 +27,8 @@ one-time manual steps macOS insists on (Accessibility permissions etc).
 | `themify/` | **the theme engine + every color that exists** — see below |
 | `pi/` | pi agent config (settings, extensions, prompts, themes). Runtime state (sessions, auth, trust) gitignored |
 | `agents/` | cross-tool agent command templates |
-| `fonts/` | Google Sans Code — the only font that isn't a macOS system font |
 | `tig/` `vim/` | tool configs |
-| `Brewfile` | curated package list (28 formulae, 2 casks) |
+| `Brewfile` | curated package list (36 formulae, 4 casks, 3 taps) |
 | `bootstrap.sh` | the setup script |
 
 ## Theming: one file per theme, every tool follows
@@ -69,7 +68,7 @@ Third-party components, with thanks:
 - **cursor-tail shader** — from [sahaj-b/ghostty-cursor-shaders](https://github.com/sahaj-b/ghostty-cursor-shaders); based on [Inigo Quilez's 2D SDF article](https://iquilezles.org/articles/distfunctions2d/)
 - **sketchybar** stack and helpers — [FelixKratz/SketchyBar](https://github.com/FelixKratz/SketchyBar) and SbarLua
 - **yabai** — the [asmvik fork](https://github.com/asmvik/yabai)
-- **Google Sans Code** font — [googlefonts/googlesans-code](https://github.com/googlefonts/googlesans-code), SIL OFL 1.1 (see `fonts/Library/Fonts/OFL.txt`)
+- **JetBrainsMono Nerd Font** — via the Brewfile cask ([JetBrains/JetBrainsMono](https://github.com/JetBrains/JetBrainsMono) + Nerd Font icons, OFL 1.1)
 
 ## License
 

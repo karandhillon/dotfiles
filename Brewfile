@@ -76,4 +76,3 @@ cask "handy"              # speech to text
 # hdiutil "Resource busy" bug.)
 cask "font-sketchybar-app-font"    # app icons in the spaces item
 cask "font-jetbrains-mono-nerd-font" # ghostty + tmux icon glyphs (Nerd Font)
-# Google Sans Code (ghostty's font) ships in this repo: fonts/ package.

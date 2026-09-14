@@ -174,7 +174,7 @@ ${B}One-time manual steps${N} (macOS insists on human clicks):
      reload after edits with ${B}cmd+shift+,${N}
   5. Colors: ${B}themify${N} (picker) or ${B}themify <sora|cendre|mocha|nord|gruvbox|dracula|kanagawa>${N}
 
-${D}Fonts need nothing: SF Pro/Mono are macOS system fonts; Google Sans Code
-ships in this repo (fonts/), sketchybar-app-font comes via the Brewfile.${N}
+${D}Fonts need nothing: SF Pro/Mono are macOS system fonts; JetBrainsMono
+Nerd Font + sketchybar-app-font come via the Brewfile.${N}
 EOF
 exit $(( failed > 0 ? 1 : 0 ))
