@@ -24,31 +24,27 @@ one-time manual steps macOS insists on (Accessibility permissions etc).
 | `ghostty/` | terminal — config, cursor-tail shader, generated theme files. Reload config after edits with `cmd+shift+,` (symlinked config breaks the file watcher) |
 | `tmux/` | `tmux.conf` — plugins installed at runtime by TPM (`prefix + I` first run) |
 | `yabai/` `skhd/` `borders/` `sketchybar/` | the window-manager stack. Sketchybar's C event providers build via `make` (bootstrap does this) |
-| `themify/` | **the theme engine + every color that exists** — see below |
 | `pi/` | pi agent config (settings, extensions, prompts, themes). Runtime state (sessions, auth, trust) gitignored |
 | `agents/` | cross-tool agent command templates |
 | `tig/` `vim/` | tool configs |
 | `Brewfile` | curated package list (36 formulae, 4 casks, 3 taps) |
 | `bootstrap.sh` | the setup script |
 
-## Theming: one file per theme, every tool follows
+## Theming: every tool owns its colors
 
-```sh
-themify                 # gum picker with color previews
-themify <name>          # sora | cendre | mocha | nord | gruvbox | dracula | kanagawa
-```
+No central theme engine — each tool's colors live in its own package,
+next to its config:
 
-Every color in the setup lives in `themify/.config/bin/themes/<name>.conf`
-(42 roles: core, status, hues, surfaces, ANSI slots, pi tints).
+- **sketchybar** — palette inlined in `sketchybar/.config/sketchybar/colors.lua`
+- **ghostty** — theme files in `ghostty/.config/ghostty/themes/`; active one named by `theme =` in config
+- **pi** — theme JSONs in `pi/.pi/agent/themes/`; active theme set in settings.json
+- **tmux** — selection/pane-border colors inline in `tmux.conf` (status bar is fixed tokyo-night `night`)
+- **borders** — active-window gradient inline in `borders/bordersrc`
+- **hunk** — `theme = "tokyo-night"` in `hunk/.config/hunk/config.toml` (hunk's own theme names)
+- **nvim** — tokyonight plugin, `nvim/.config/nvim/lua/plugins/tokyonight.lua`
 
-- **sketchybar** reads the conf at runtime (a pure renderer — zero colors in the bar)
-- **ghostty + pi themes** are *generated* from the conf: run
-  `themify/build.sh` after editing a palette (output is committed, so
-  checkouts work without running it)
-- **borders gradient, tmux selection/copy-mode, cursor trail** recolor live
-
-The tmux status bar is deliberately fixed (stock tokyo-night `night`);
-only its selection and pane borders follow the theme.
+(The generated theme files in ghostty/pi were originally produced by the
+retired themify engine's build step; they are static configs now.)
 
 ## Notes for future me
 

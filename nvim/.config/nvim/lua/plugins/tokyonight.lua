@@ -1,12 +1,9 @@
 -- Colorscheme — tokyonight "night", deliberately matching the tmux status
--- bar, which is FIXED to tokyo-night "night" and never theme-switched
--- (see themify.md). The rest of the desktop themes around this constant.
---
--- Named tokyonight.lua (NOT colorscheme.lua) on purpose: themify's nvim
--- hook anchors on nvim/lua/plugins/colorscheme.lua and rewrites its
--- colorscheme line on theme switches — we don't want that, since no nvim
--- colorschemes exist for the original palettes (sora/cendre). This keeps
--- themify's nvim step skipping loudly, as it does today.
+-- bar, which is FIXED to tokyo-night "night" and never theme-switched.
+-- (Historical note: the retired themify engine had an nvim hook that
+-- anchored on nvim/lua/plugins/colorscheme.lua and rewrote its colorscheme
+-- line on theme switches — this file is deliberately NOT named that, so
+-- no future engine revives that hook by accident.)
 return {
   "folke/tokyonight.nvim",
   lazy = false,                -- load at startup

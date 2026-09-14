@@ -17,9 +17,8 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools"
 export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/Emulator"
 
-# personal scripts + themify
+# personal scripts
 export PATH="$PATH:$HOME/bin"
-export PATH="$PATH:$HOME/.config/bin"   # themify + friends
 
 # mise shims — lets non-interactive shells (nvim's tree-sitter calls, scripts,
 # tmux panes) resolve mise-managed tools (node, npm:* CLIs) without waiting

@@ -6,7 +6,8 @@ options=(
   width=3.0
   hidpi=on              # crisp hairline on Retina
 
-  # themify-managed line below: diagonal gradient ACCENT → ACCENT_2
+  # active-window gradient — sora accent pair (ACCENT → ACCENT_2 from the
+  # retired themify palette; owned here now, next to the config)
   active_color="gradient(top_left=0xFF80C8E0,bottom_right=0xFFB0A0D8)"
 
   inactive_color=0x00000000   # no border on unfocused windows

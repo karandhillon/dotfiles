@@ -169,10 +169,9 @@ ${B}One-time manual steps${N} (macOS insists on human clicks):
      enable ${B}yabai${N}, ${B}skhd${N}, ${B}sketchybar${N}, ${B}borders${N}
      (they appear there after their first run — this bootstrap counts as one)
   2. Optionally set ${B}Ghostty${N} as your default terminal
-  3. Start a ${B}new terminal window${N} (picks up PATH: themify, aliases)
+  3. Start a ${B}new terminal window${N} (picks up PATH: mise shims, aliases)
   4. Ghostty ignores config edits while config lives behind a symlink —
      reload after edits with ${B}cmd+shift+,${N}
-  5. Colors: ${B}themify${N} (picker) or ${B}themify <sora|cendre|mocha|nord|gruvbox|dracula|kanagawa>${N}
 
 ${D}Fonts need nothing: SF Pro/Mono are macOS system fonts; JetBrainsMono
 Nerd Font + sketchybar-app-font come via the Brewfile.${N}
