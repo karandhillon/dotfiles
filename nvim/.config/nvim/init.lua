@@ -1,3 +1,9 @@
+-- <leader> must be set BEFORE lazy.setup() — lazy bakes it into its
+-- keymaps (keys = {...} specs) at setup time; later changes come too late
+-- and every <leader> map would silently fall back to vim's default `\`.
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Escape insert mode with jj
 vim.keymap.set("i", "jj", "<Esc>")
 
