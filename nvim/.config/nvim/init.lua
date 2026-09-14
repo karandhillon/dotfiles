@@ -23,6 +23,20 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 
+-- Whitespace visibility: off by default (dots everywhere is noisy to read),
+-- characters defined so the toggle renders nicely. <leader>l flips it —
+-- use it to answer "is that a tab or spaces?" when debugging a file.
+vim.opt.list = false
+vim.opt.listchars = {
+  tab = "→ ",
+  space = "·",
+  trail = "•",
+  nbsp = "␣",
+}
+vim.keymap.set("n", "<leader>l", function()
+  vim.opt.list = not vim.opt.list:get()
+end, { desc = "Toggle whitespace visibility" })
+
 -- Escape insert mode with jj
 vim.keymap.set("i", "jj", "<Esc>")
 
