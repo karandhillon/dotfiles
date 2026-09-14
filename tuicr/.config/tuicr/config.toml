@@ -1,0 +1,15 @@
+# tuicr — code review TUI (replaces hunk).
+# Config reference: https://github.com/agavra/tuicr/blob/main/docs/CONFIG.md
+
+# Built-in tokyo-night-storm (bg #24283b — folke's storm variant; night isn't
+# bundled). Matches the desktop's chrome layer; zero color files in this repo.
+theme = "tokyo-night-storm"
+
+# Write comments in nvim (respects EDITOR too, but explicit beats implicit)
+editor = "nvim"
+
+# Vim keybindings inside the comment editor as well
+comment_vim = true
+
+# Match nvim: hybrid numbers while navigating diffs
+relative_line_numbers = true

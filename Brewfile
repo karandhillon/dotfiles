@@ -64,6 +64,7 @@ brew "mise"
 # JetBrains' official Kotlin LSP (IntelliJ engine). Pre-alpha but weekly
 # releases; binary = brew symlink 'kotlin-lsp' → intellij-server.
 brew "kotlin-lsp"
+brew "tuicr"            # code-review TUI (vim keys, submits to GitHub/GitLab/…)
 
 # ── apps ────────────────────────────────────────────────────────────────────
 cask "ghostty"
