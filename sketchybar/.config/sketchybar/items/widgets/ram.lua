@@ -4,7 +4,7 @@ local settings = require("settings")
 
 local ram = sbar.add("item", "widgets.ram", {
 	position = "right",
-	icon = { string = "􀧖", color = colors.accent.sage },
+	icon = { string = "", color = colors.accent.sage },
 	label = {
 		string = "??%",
 		font = {

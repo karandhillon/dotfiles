@@ -6,7 +6,7 @@ sbar.add("item", { position = "right", width = settings.group_paddings })
 
 local clock = sbar.add("item", {
 	icon = {
-		string = "􀐫",
+		string = "",
 		color = colors.accent.primary,
 		padding_left = 8,
 		font = {
@@ -37,7 +37,7 @@ sbar.add("item", { position = "right", width = settings.group_paddings })
 
 local cal = sbar.add("item", {
 	icon = {
-		string = "􀉉",
+		string = "",
 		color = colors.accent.steel,
 		padding_left = 8,
 		font = {
