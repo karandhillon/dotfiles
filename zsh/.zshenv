@@ -29,4 +29,4 @@ export PATH="$PATH:$HOME/.local/share/mise/shims"
 
 # plain environment for tools and scripts
 export JAVA_HOME="$(/usr/libexec/java_home)"
-export EDITOR="vim"
+export EDITOR="nvim"
