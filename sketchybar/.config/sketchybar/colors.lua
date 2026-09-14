@@ -1,52 +1,60 @@
--- sketchybar colors — sora palette, inlined.
+-- sketchybar colors — TokyoNight Night palette, inlined.
 --
--- History: this module used to hold NO colors, reading them at runtime
--- from themify's theme confs (single source of truth, engine-managed).
--- The engine is gone; each tool now owns its colors close to its config
--- (this file). Palette provenance: themify/themes/sora.conf at the time
--- of the migration — same values, now literal.
+-- Palette: folke/tokyonight.nvim "night" — same as the terminal (ghostty
+-- built-in TokyoNight Night), editor (nvim), and tmux bar. Values are
+-- literal here; every tool owns its colors next to its config.
+--
+-- Role mapping (role -> tokyonight source color):
+--   BG/FG = bg/fg · BG_ALT = bg_dark · FG_MUTED = fg_dark (dim text)
+--   BORDER/POPUP_BORDER/BG2 = fg_gutter (the canonical border color)
+--   ACCENT = blue (signature) · ACCENT_2 = magenta (gradient partner)
+--   ERROR/WARN = red1/yellow (folke's error/warning) · OK = green
+--   hues map 1:1 · SAGE = green1 · ROSE = magenta2 · TEAL = teal
+--   STEEL = dark5 · SHADOW = bg_dark1 · HIGHLIGHT = blue5 (selected-space
+--   border — light, visible) · POPUP_BG = bg_dark (folke's bg_popup)
+--   BAR_BORDER = bg_highlight (raised surface, as bar edge)
 --
 -- Shape is unchanged: every item/widget imports this table, so only the
--- source of the values changed, not the API.
+-- values changed, not the API.
 local r = {
 	-- core
-	BG = 0xff0e1018,      -- window/pane background
-	BG_ALT = 0xff1e2430,  -- secondary surface
-	FG = 0xffc8d0e0,      -- primary text
-	FG_MUTED = 0xff586478, -- dimmed text
-	BORDER = 0xff2a3448,  -- dividers, pane borders
-	ACCENT = 0xff80C8E0,  -- the theme's signature color
-	ACCENT_2 = 0xffB0A0D8, -- gradient partner (lavender)
+	BG = 0xff1a1b26,      -- window/pane background
+	BG_ALT = 0xff16161e,  -- secondary surface
+	FG = 0xffc0caf5,      -- primary text
+	FG_MUTED = 0xffa9b1d6, -- dimmed text
+	BORDER = 0xff3b4261,  -- dividers, pane borders
+	ACCENT = 0xff7aa2f7,  -- the theme's signature color (blue)
+	ACCENT_2 = 0xffbb9af7, -- gradient partner (magenta)
 	-- status — thresholds and failures only, not syntax
-	ERROR = 0xffc46c78,
-	WARN = 0xffd0a888,
-	OK = 0xff90c8a0,
-	INFO = 0xff80c8e0,
+	ERROR = 0xffdb4b4b,
+	WARN = 0xffe0af68,
+	OK = 0xff9ece6a,
+	INFO = 0xff7aa2f7,
 	-- hues
-	RED = 0xffc46c78,
-	GREEN = 0xff90c8a0,
-	BLUE = 0xff80c8e0,
-	YELLOW = 0xffd4b878,
-	ORANGE = 0xffd0a888,
-	MAGENTA = 0xffb0a0d8,
-	CYAN = 0xff80c8e0,
-	PURPLE = 0xffb0a0d8,
-	SAGE = 0xff90c8a0,
-	ROSE = 0xffd0909c,
-	GOLD = 0xffd4b878,
-	PEACH = 0xffd0a888,
-	TEAL = 0xff78b8b0,
-	STEEL = 0xff8898b8,
-	SHADOW = 0xff0a0c12,
+	RED = 0xfff7768e,
+	GREEN = 0xff9ece6a,
+	BLUE = 0xff7aa2f7,
+	YELLOW = 0xffe0af68,
+	ORANGE = 0xffff9e64,
+	MAGENTA = 0xffbb9af7,
+	CYAN = 0xff7dcfff,
+	PURPLE = 0xff9d7cd8,
+	SAGE = 0xff73daca,
+	ROSE = 0xffff007c,
+	GOLD = 0xffe0af68,
+	PEACH = 0xffff9e64,
+	TEAL = 0xff1abc9c,
+	STEEL = 0xff737aa2,
+	SHADOW = 0xff0C0E14,
 	-- surfaces
-	HIGHLIGHT = 0xff8898b8,
-	BG2 = 0xff222838,
-	BAR_BORDER = 0xff222838,
-	POPUP_BG = 0xff14161e,
-	POPUP_BORDER = 0xff586478,
+	HIGHLIGHT = 0xff89ddff,
+	BG2 = 0xff3b4261,
+	BAR_BORDER = 0xff292e42,
+	POPUP_BG = 0xff16161e,
+	POPUP_BORDER = 0xff3b4261,
 }
 
--- derived alpha layers (as before: bar bg = BG at 80%, popup bg at 75%)
+-- derived alpha layers (bar bg = BG at 80%, popup bg = 75%)
 local bar_bg = (r.BG & 0x00ffffff) | 0xcc000000
 local popup_bg = (r.POPUP_BG & 0x00ffffff) | 0xc0000000
 
