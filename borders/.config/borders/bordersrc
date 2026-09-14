@@ -3,7 +3,7 @@
 
 options=(
   style=round           # rounded corners
-  width=3.0
+  width=6.0             # hidpi=on renders at retina res: ~3px visible on 1x displays
   hidpi=on              # crisp hairline on Retina
 
   # active-window gradient — tokyonight night accent pair (blue → magenta,
