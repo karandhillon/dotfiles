@@ -37,11 +37,6 @@ vim.keymap.set("n", "<leader>l", function()
   vim.opt.list = not vim.opt.list:get()
 end, { desc = "Toggle whitespace visibility" })
 
--- Collapse the cmdline row (mode/branch info lives in lualine's
--- statusline above it). The line reappears automatically whenever a
--- : command is typed or a message needs somewhere to land.
-vim.opt.cmdheight = 0
-
 -- Escape insert mode with jj
 vim.keymap.set("i", "jj", "<Esc>")
 
