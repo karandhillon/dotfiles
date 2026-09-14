@@ -1,4 +1,9 @@
-theme = sora
+# TokyoNight Night — ghostty BUILT-IN theme (Contents/Resources/ghostty/themes),
+# the official port of folke/tokyonight.nvim "night": verified bg #1a1b26 /
+# fg #c0caf5 / palette slots match the nvim palette exactly. Zero color
+# files in this repo — the terminal, editor, and tmux bar now share one
+# palette, and the tool itself ships it.
+theme = TokyoNight Night
 
 # Font — JetBrainsMono Nerd Font Mono: the "Mono" variant keeps every
 # glyph (icons included) on the terminal grid. Installed via Brewfile cask.
