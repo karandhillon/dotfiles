@@ -2,7 +2,8 @@ return {
 	paddings = 3,
 	group_paddings = 5,
 
-	icons = "sf-symbols", -- alternatively available: NerdFont
+	icons = "NerdFont", -- nerd glyphs render from icon.font (JetBrainsMono NF);
+	-- sf-symbols only pairs with SF Pro fonts — mono text + sf icons broke
 
 	-- JetBrainsMono Nerd Font (the plain variant, NOT Mono: a status bar
 	-- is not a character grid — icons render at natural width). Matches
