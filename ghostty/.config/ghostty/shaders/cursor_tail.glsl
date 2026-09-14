@@ -1,5 +1,6 @@
 // From https://github.com/sahaj-b/ghostty-cursor-shaders (cursor_tail.glsl) — trail follows the
-// cursor color automatically (iCurrentCursorColor), so themify needs no shader handling.
+// cursor color automatically (iCurrentCursorColor): cursor-color = cell-foreground in config
+// resolves through the active theme, so the trail recolors with it. No shader edits needed.
 // sRGB -> Linear conversion (needed because Ghostty passes sRGB values but the shader pipeline operates in linear color space)
 vec3 sRGBToLinear(vec3 c) {
     return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), c));
