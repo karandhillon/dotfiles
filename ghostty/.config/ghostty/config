@@ -16,7 +16,7 @@ font-style-bold = false
 # Window
 # NOTE: ~/.config/ghostty is a symlink into ~/dotfiles, which breaks Ghostty's config file-watcher — hot-reload doesn't work, so reload manually with cmd+shift+comma.
 title = " "
-macos-option-as-alt            = true
+macos-option-as-alt = true
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = hidden
 macos-window-shadow = false
@@ -30,7 +30,9 @@ window-save-state = always
 cursor-style = block
 cursor-style-blink = true
 cursor-opacity = 0.8
-cursor-invert-fg-bg = true
+cursor-color = cell-foreground
+cursor-text = cell-background
+# cursor-invert-fg-bg = true
 shell-integration-features = no-cursor
 
 # Misc

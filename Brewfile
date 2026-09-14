@@ -38,6 +38,7 @@ brew "fzf"           # fuzzy finder (cdi interactive picker, themify fallback)
 brew "rsync"
 brew "socat"
 brew "fswatch"
+brew "neovim"
 
 # ── capture / media (screengif, screenshots, bar volume widget) ────────────
 brew "ffmpeg"
