@@ -19,13 +19,13 @@ macos-option-as-alt = true
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = hidden
 macos-window-shadow = false
-# Padding must stay in sync with the per-side padding in yabai/yabairc, or
-# you get a dead pixel strip under the last row. Top padding is 0: the tmux
-# status bar lives at the top and must sit flush (10pt here used to paint a
-# segment-colored strip above the bar via window-padding-color=extend).
-# yabai's bottom_padding carries the 10pt instead — grid math in yabairc.
-window-padding-x = 10
-window-padding-y = 0,0
+# Padding must stay in sync with yabai/yabairc (grid math there). Outer
+# margins around the tiled area are an even 10pt on every side (yabai);
+# the grid remainders (3pt horizontal, 4pt vertical) are absorbed HERE:
+# x=7 per side (1694 = 11x154 cols), y=0 top (tmux bar flush) + 4 bottom
+# (1053 = 27x39 rows). No dead pixel strips.
+window-padding-x = 7
+window-padding-y = 0,4
 window-padding-color = extend
 window-save-state = always
 
