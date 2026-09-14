@@ -12,5 +12,6 @@ return {
     { "<leader>fg", "<cmd>Telescope live_grep<cr>",  desc = "Grep content" },
     { "<leader>fb", "<cmd>Telescope buffers<cr>",    desc = "Buffers" },
     { "<leader>fh", "<cmd>Telescope help_tags<cr>",  desc = "Help" },
+    { "<leader>fk", "<cmd>Telescope keymaps<cr>",   desc = "Keymaps (fuzzy)" },
   },
 }
