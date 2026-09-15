@@ -33,6 +33,7 @@ brew "jq"
 brew "fd"
 brew "ripgrep"     # grep on steroids — also telescope's live_grep backend in nvim
 brew "tree"
+brew "btop"         # system monitor — spot Gradle daemons: / filter, t tree, Enter for cmdline
 brew "bat"           # cat with syntax highlighting
 brew "eza"           # ls with icons + git status
 brew "zoxide"        # smarter cd (replaces cd via zsh init --cmd cd)
