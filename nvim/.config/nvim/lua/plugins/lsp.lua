@@ -8,12 +8,30 @@
 --         preset assumes upstream's `intellij-server` name
 --   single_file_support — JetBrains' recommendation: the server needs a
 --         Gradle/Maven project root, loose .kt files get no client
+--   cmd_env — the EAP server must run on its bundled JBR 25, but it uses
+--         that same JVM to auto-detect a Gradle daemon JVM
+--         (GradleToolingApiHelper.findTheMostCompatibleJdk picks the highest
+--         compatible JDK it can find = JBR 25). a work project's
+--         settings.gradle.kts hard-rejects anything but Zulu 21, which killed
+--         every Gradle import → no source index → `gd` silently did nothing.
+--         This system property (checked first by the server) pins the Gradle
+--         JVM to Zulu 21. Also requires
+--         `android.disallowKotlinSourceSets=false` in ~/.gradle/gradle.properties
+--         (the LSP's model build trips AGP's built-in-Kotlin guard; normal
+--         builds are unaffected).
 return {
   "neovim/nvim-lspconfig",
   config = function()
     vim.lsp.config("kotlin_lsp", {
-      cmd = { "kotlin-lsp", "--stdio" },
+      cmd = {
+        "kotlin-lsp",
+        "--system-path", vim.fn.stdpath("state") .. "/kotlin-lsp",
+        "--stdio",
+      },
       single_file_support = false,
+      cmd_env = {
+        IJ_JAVA_OPTIONS = "-Dcom.jetbrains.ls.imports.gradle.java.home=/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home",
+      },
     })
     vim.lsp.enable("kotlin_lsp")
 
