@@ -35,6 +35,29 @@ return {
     })
     vim.lsp.enable("kotlin_lsp")
 
+    -- kotlin-lsp's native launcher (and, if closed mid-import, its JVM)
+    -- can outlive nvim and keep holding the workspace index LOCK — the
+    -- next `nvim .` then fails with "LOCK: Resource temporarily
+    -- unavailable". On exit, kill only OUR launcher (parent = this nvim)
+    -- plus true orphans (parent = 1); other live nvim sessions keep theirs.
+    vim.api.nvim_create_autocmd("VimLeave", {
+      callback = function()
+        local me = tostring(vim.fn.getpid())
+        local pids = vim.fn.systemlist("pgrep -f 'kotlin-lsp --system-path'") or {}
+        for _, pidstr in ipairs(pids) do
+          local pid = pidstr:match("%d+")
+          if pid then
+            local ok, out = pcall(vim.fn.systemlist, ("ps -o ppid= -p %s"):format(pid))
+            local ppid = ok and out and out[1] and out[1]:match("%d+") or nil
+            if ppid == me or ppid == "1" then
+              -- TERM the launcher first, then any JVM child it left behind
+              vim.fn.system(("kill -TERM %s; pkill -TERM -P %s"):format(pid, pid))
+            end
+          end
+        end
+      end,
+    })
+
     -- Standard LSP keys, only in buffers with an attached server
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(event)
