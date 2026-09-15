@@ -41,14 +41,15 @@ return {
         local function map(lhs, rhs, desc)
           vim.keymap.set("n", lhs, rhs, { buffer = event.buf, desc = "LSP: " .. desc })
         end
-        map("gd", vim.lsp.buf.definition, "go to definition")
-        map("gr", function()
+        map("<leader>gd", vim.lsp.buf.definition, "go to definition")
+        map("<leader>gr", function()
           -- fuzzy-searchable references via telescope (lazy-loads on first use)
           require("telescope.builtin").lsp_references()
         end, "references")
         map("K", vim.lsp.buf.hover, "hover docs")
         map("<leader>rn", vim.lsp.buf.rename, "rename symbol")
-        map("<leader>ca", vim.lsp.buf.code_action, "code action")
+        -- code action: using nvim 0.11+ default `gra` instead — frees the
+        -- <leader>ca prefix so <leader>caob has no timeout collision
       end,
     })
   end,

@@ -14,6 +14,12 @@ return {
     { "<leader>3", "<cmd>BufferLineGoToBuffer 3<cr>", desc = "Buffer 3" },
     { "<leader>4", "<cmd>BufferLineGoToBuffer 4<cr>", desc = "Buffer 4" },
     { "<leader>5", "<cmd>BufferLineGoToBuffer 5<cr>", desc = "Buffer 5" },
+    -- closing buffers: ZZ/ZQ only close *windows*, buffers stay on the
+    -- line. :bd deletes the buffer and the window switches to an
+    -- alternate one — it only closes the window if this was the last buffer.
+    { "<leader>cb", "<cmd>bd<cr>", desc = "Close buffer" },
+    { "<leader>cB", "<cmd>bd!<cr>", desc = "Close buffer (discard changes)" },
+    { "<leader>caob", "<cmd>BufferLineCloseLeft<cr><cmd>BufferLineCloseRight<cr>", desc = "Close all other buffers" },
   },
   opts = {
     options = {
