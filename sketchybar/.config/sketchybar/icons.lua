@@ -84,7 +84,7 @@ local icons = {
 			download = "",
 			connected = "󰖩",
 			disconnected = "󰖪",
-			router = "Missing Icon",
+			router = "󱂇",
 		},
 		media = {
 			back = "",
