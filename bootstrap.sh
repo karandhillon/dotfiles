@@ -58,9 +58,8 @@ finish 0 "$(brew --version | head -1)"
 begin "trust third-party taps"
 rc=0
 brew trust asmvik/formulae >/dev/null 2>&1 || rc=1
-brew trust felixkratz/formulae >/dev/null 2>&1 || rc=1
 brew trust jetbrains/utils >/dev/null 2>&1 || rc=1
-finish $rc "asmvik (yabai fork, skhd) + felixkratz (sketchybar, borders) + jetbrains (kotlin-lsp)"
+finish $rc "asmvik (skhd) + jetbrains (kotlin-lsp)"
 
 # ── 3. packages ─────────────────────────────────────────────────────────────
 begin "brew bundle (packages, apps, fonts)"
@@ -90,16 +89,7 @@ else
   finish 0 "$count packages"
 fi
 
-# ── 5. sketchybar event providers (C binaries, excluded from git) ──────────
-begin "build sketchybar event providers"
-sb="$ROOT/sketchybar/.config/sketchybar/helpers"
-rc=0
-for d in "$sb/event_providers" "$sb/menus"; do
-  make -C "$d" >/dev/null 2>&1 || { rc=1; break; }
-done
-finish $rc "cpu_load, network_load, menus"
-
-# ── 6. tmux plugins ─────────────────────────────────────────────────────────
+# ── 5. tmux plugins ─────────────────────────────────────────────────────────
 begin "tmux plugins (TPM)"
 tpm="$HOME/.config/tmux/plugins/tpm"
 if [[ ! -d "$tpm" ]]; then
@@ -113,7 +103,7 @@ if [[ -n "$tpm" ]]; then
   fi
 fi
 
-# ── 7. mise tools (node, npm CLIs — versions in mise/.config/mise/config.toml) ─
+# ── 6. mise tools (node, npm CLIs — versions in mise/.config/mise/config.toml) ─
 # mise itself comes from the Brewfile (step 3); its config is stowed (step 4).
 # `mise install` reads the stowed config and installs anything missing —
 # idempotent, like `brew bundle`. Tool versions are pinned in the repo, not
@@ -126,24 +116,15 @@ else
   finish 1 "mise missing — brew bundle step failed?"
 fi
 
-# ── 8. services ─────────────────────────────────────────────────────────────
-begin "start services (sketchybar, borders, yabai, skhd)"
-note=""
-rc=0
-for s in sketchybar borders; do
-  out="$(brew services start "$s" 2>&1)" || true
-  if grep -qi 'already started' <<<"$out"; then note+="$s already; "; else note+="$s started; "; fi
-done
-for s in yabai skhd; do
-  if "$s" --start-service >/dev/null 2>&1; then
-    note+="$s ok; "
-  else
-    rc=1; note+="$s FAILED; "
-  fi
-done
-finish $rc "$note"
+# ── 7. services ─────────────────────────────────────────────────────────────
+begin "start services (skhd)"
+if skhd --start-service >/dev/null 2>&1; then
+  finish 0 "skhd started"
+else
+  finish 1 "skhd FAILED — check Accessibility permission and re-run"
+fi
 
-# ── 9. report ───────────────────────────────────────────────────────────────
+# ── 8. report ───────────────────────────────────────────────────────────────
 printf '\n%s────────────────────────────────── REPORT ──────────────────────────────────%s\n' "$B" "$N"
 passed=0; failed=0; skipped=0
 for i in $(seq 1 "$COUNT"); do
@@ -166,14 +147,14 @@ cat <<EOF
 
 ${B}One-time manual steps${N} (macOS insists on human clicks):
   1. System Settings → Privacy & Security → Accessibility:
-     enable ${B}yabai${N}, ${B}skhd${N}, ${B}sketchybar${N}, ${B}borders${N}
-     (they appear there after their first run — this bootstrap counts as one)
+     enable ${B}skhd${N}
+     (it appears there after its first run — this bootstrap counts as one)
   2. Optionally set ${B}Ghostty${N} as your default terminal
   3. Start a ${B}new terminal window${N} (picks up PATH: mise shims, aliases)
   4. Ghostty ignores config edits while config lives behind a symlink —
      reload after edits with ${B}cmd+shift+,${N}
 
 ${D}Fonts need nothing: SF Pro/Mono are macOS system fonts; JetBrainsMono
-Nerd Font + sketchybar-app-font come via the Brewfile.${N}
+Nerd Font comes via the Brewfile.${N}
 EOF
 exit $(( failed > 0 ? 1 : 0 ))
