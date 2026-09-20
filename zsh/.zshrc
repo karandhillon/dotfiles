@@ -11,6 +11,19 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 setopt interactive_comments
 
+# ── Shift+Tab: cycle completions backwards ──────────────────────────────────
+# terminfo[kcbt] (back-tab) is the portable Shift+Tab sequence; ^[[Z is the
+# common fallback. Also bind it inside the menu itself (menuselect keymap,
+# provided by zsh/complist) so Shift+Tab goes back once the menu is open.
+zmodload zsh/complist
+if [[ -n ${terminfo[kcbt]} ]]; then
+  bindkey "${terminfo[kcbt]}" reverse-menu-complete
+  bindkey -M menuselect "${terminfo[kcbt]}" reverse-menu-complete
+else
+  bindkey '^[[Z' reverse-menu-complete
+  bindkey -M menuselect '^[[Z' reverse-menu-complete
+fi
+
 # ── prompt: the robbyrussell look, hand-rolled (➜ dir git:(branch)) ─────────
 # No dirty ✗ marker: a per-prompt `git status` costs ~260ms in big repos.
 # Ask `git st` / tig when you want to know — the prompt stays instant.
