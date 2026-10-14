@@ -6,3 +6,6 @@
 # Loaded by the ~/.zshrc.d/*.zsh drop-in loop.
 zsh/.zshrc.d/work.zsh
 zsh/.zshrc.d/android.zsh
+
+# TPM-installed tmux plugins — recreated by bootstrap
+tmux/.config/tmux/plugins/

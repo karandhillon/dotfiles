@@ -2,7 +2,7 @@
 # only; nothing slow, nothing interactive (those live in .zshrc).
 
 # rust/cargo
-. "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 # Homebrew (Apple Silicon): prepend so /opt/homebrew/bin precedes /usr/bin:/bin.
 # Critical for tmux plugins that use `#!/usr/bin/env bash` shebangs — /bin/bash
@@ -27,5 +27,5 @@ export PATH="$PATH:$HOME/bin"
 export PATH="$PATH:$HOME/.local/share/mise/shims"
 
 # plain environment for tools and scripts
-export JAVA_HOME="$(/usr/libexec/java_home)"
+JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null)" && export JAVA_HOME || unset JAVA_HOME
 export EDITOR="nvim"
