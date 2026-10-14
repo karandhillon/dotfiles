@@ -26,7 +26,7 @@ brew "btop"                          # system monitor
 brew "git"
 brew "git-lfs"
 brew "git-delta"                     # diff pager — wired in git/.config/git/config
-brew "gh"                            # GitHub CLI + git credential helper
+brew "gh"                            # GitHub CLI (also sets up the SSH key)
 brew "tig"                           # git TUI
 
 # ── editor + terminal ───────────────────────────────────────────────────────

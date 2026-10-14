@@ -24,11 +24,3 @@
 	st = status -sb
 	co = checkout
 	lg = log --graph --oneline --decorate --all
-
-# ── GitHub auth: reuse gh's login (gh auth login) ───────────────────────────
-[credential "https://github.com"]
-	helper =
-	helper = !/opt/homebrew/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper =
-	helper = !/opt/homebrew/bin/gh auth git-credential

@@ -6,7 +6,7 @@ One folder per tool; each folder mirrors where its files live under `~`.
 ## New machine
 
 ```sh
-git clone https://github.com/karandhillon/dotfiles ~/dotfiles
+git clone https://github.com/karandhillon/dotfiles ~/dotfiles   # https: no SSH key yet
 cd ~/dotfiles && ./bootstrap.sh
 ```
 
@@ -19,12 +19,13 @@ report and the few manual steps macOS insists on.
 | Folder | Links to | What |
 |---|---|---|
 | `zsh/` | `~/.zshenv`, `~/.zshrc`, `~/.zshrc.d/` | shell — env + PATH in `.zshenv`, interactive setup in `.zshrc`, add-ons in `.zshrc.d/` |
-| `git/` | `~/.config/git/` | identity, delta pager, `st` / `co` / `lg` aliases, gh as credential helper |
+| `git/` | `~/.config/git/` | identity, delta pager, `st` / `co` / `lg` aliases |
 | `nvim/` | `~/.config/nvim/` | editor — one file per plugin in `lua/plugins/` |
 | `tmux/` | `~/.config/tmux/` | prefix is `` ` ``; plugins installed by TPM into `plugins/` (gitignored) |
 | `ghostty/` | `~/.config/ghostty/` | terminal + cursor-trail shader |
 | `tig/` | `~/.config/tig/` | git TUI |
 | `ideavim/` | `~/.config/ideavim/` | vim keys in Android Studio |
+| `ssh/` | `~/.ssh/config` | GitHub over SSH, key passphrase kept in the macOS Keychain (config only — never keys) |
 | `mise/` | `~/.config/mise/` | runtime versions (node, tree-sitter) |
 | `skhd/` | `~/.config/skhd/` | global hotkeys — `alt-1` Ghostty, `alt-2` Chrome |
 | `Brewfile` | — | every brew formula and app, grouped by purpose |

@@ -150,6 +150,10 @@ ${B}One-time manual steps${N} (macOS insists on human clicks):
      (it appears there after its first run — this bootstrap counts as one)
   2. Optionally set ${B}Ghostty${N} as your default terminal
   3. Start a ${B}new terminal window${N} (picks up PATH: mise shims, aliases)
-  4. ${B}gh auth login${N} — git uses gh for GitHub credentials
+  4. ${B}gh auth login${N} — pick SSH; it creates + uploads ~/.ssh/id_ed25519
+  5. ${B}ssh-add --apple-use-keychain ~/.ssh/id_ed25519${N} — passphrase into Keychain
+  6. ${B}ssh -T git@github.com${N} — accept GitHub's host key (check it against
+     docs.github.com → GitHub's SSH key fingerprints)
+  7. ${B}git -C ~/dotfiles remote set-url origin git@github.com:karandhillon/dotfiles.git${N}
 EOF
 exit $(( failed > 0 ? 1 : 0 ))
