@@ -1,0 +1,34 @@
+[user]
+	name = Karan Dhillon
+	email = 32627089+karandhillon@users.noreply.github.com   # GitHub noreply — keeps the real address private
+
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
+
+# ── delta: syntax-highlighted diffs (git diff / log -p / show / add -p) ─────
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true         # n / N jump between files
+	line-numbers = true
+	syntax-theme = TwoDark   # close to tokyonight; `delta --list-syntax-themes`
+[merge]
+	conflictStyle = zdiff3
+
+# ── aliases ─────────────────────────────────────────────────────────────────
+[alias]
+	st = status -sb
+	co = checkout
+	lg = log --graph --oneline --decorate --all
+
+# ── GitHub auth: reuse gh's login (gh auth login) ───────────────────────────
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
