@@ -5,7 +5,7 @@ return {
   build = ":TSUpdate",
   config = function()
     -- Install parsers (no-op if already installed). Requires the
-    -- tree-sitter CLI on PATH — provided by mise (npm:tree-sitter-cli).
+    -- tree-sitter CLI on PATH — provided by mise (ubi:tree-sitter/tree-sitter).
     require("nvim-treesitter").install({
       "bash", "css", "go", "html", "java", "javascript", "json",
       "kotlin", "lua", "python", "tsx", "typescript", "yaml",

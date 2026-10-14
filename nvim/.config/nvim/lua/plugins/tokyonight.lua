@@ -1,9 +1,4 @@
--- Colorscheme — tokyonight "night", deliberately matching the tmux status
--- bar, which is FIXED to tokyo-night "night" and never theme-switched.
--- (Historical note: the retired themify engine had an nvim hook that
--- anchored on nvim/lua/plugins/colorscheme.lua and rewrote its colorscheme
--- line on theme switches — this file is deliberately NOT named that, so
--- no future engine revives that hook by accident.)
+-- Colorscheme — tokyonight "night", the same palette as Ghostty and the tmux bar.
 return {
   "folke/tokyonight.nvim",
   lazy = false,                -- load at startup

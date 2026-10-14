@@ -14,11 +14,7 @@ vim.opt.relativenumber = true
 -- to pbcopy/pbpaste (built into macOS) as its clipboard provider.
 vim.opt.clipboard = "unnamedplus"
 
--- Indentation basics (like font size — plain editor settings, no smarts):
--- Tab inserts spaces, indent steps are 4 columns wide. Matches how the
--- codebase is written. NOTE: Enter auto-indent is NOT here — waiting for
--- nvim-treesitter to ship a kotlin indents.scm upstream (main-branch
--- rewrite is growing language support). Until then, new lines start at col 0.
+-- Indentation: Tab inserts spaces, 4 columns wide.
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4

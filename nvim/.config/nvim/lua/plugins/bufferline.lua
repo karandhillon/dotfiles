@@ -1,6 +1,6 @@
 -- bufferline — visual buffer tabs along the top of nvim: every open
 -- buffer as a tab with devicon + close button; click to switch, and
--- <leader>1..9 jumps straight to that ordinal. Pairs with lualine
+-- <leader>1..5 jumps straight to that ordinal. Pairs with lualine
 -- (bottom) to complete the IDE-style frame. tokyonight theme matches
 -- the rest of the setup; icons from JetBrainsMono Nerd Font.
 return {
@@ -30,10 +30,6 @@ return {
       separator_style = "thin",
       show_buffer_close_icons = true,
       always_show_bufferline = true,
-      offsets = {
-        -- keep the tab strip aligned when a sidebar-style window opens
-        { filetype = "oil", text = "Files", highlight = "Directory" },
-      },
     },
   },
 }
