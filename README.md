@@ -1,58 +1,53 @@
 # dotfiles
 
-Everything that defines my machine, in one repo. macOS, managed with
-[GNU stow](https://www.gnu.org/software/stow/). Private-machine profile —
-work tooling deliberately absent.
+My macOS setup in one repo, linked into `~` with [GNU stow](https://www.gnu.org/software/stow/).
+One folder per tool; each folder mirrors where its files live under `~`.
 
-## New machine: two steps
+## New machine
 
 ```sh
-git clone <this-repo> ~/dotfiles
-cd dotfiles && ./bootstrap.sh
+git clone https://github.com/karandhillon/dotfiles ~/dotfiles
+cd ~/dotfiles && ./bootstrap.sh
 ```
 
-`bootstrap.sh` is idempotent (safe to re-run) and fail-safe: every step
-reports pass/fail/skip, failures don't abort the run, and the final report
-tells you exactly what worked and what needs attention. It ends with the
-one-time manual steps macOS insists on (Accessibility permissions etc).
+`bootstrap.sh` is safe to re-run. It installs Homebrew + the `Brewfile`, stows every
+package, installs tmux plugins and mise tools, starts skhd, then prints a pass/fail
+report and the few manual steps macOS insists on.
 
-## The packages
+## Layout
 
-| Package | What it is |
-|---|---|
-| `zsh/` | shell — `.zshrc` core + `.zshrc.d/` drop-in modules (`aliases.zsh`). Env lives in `.zshenv`. ~0.1s startup, no frameworks. Machine/work-specific config goes in a gitignored `.zshrc.d/work.zsh` — the drop-in loop sources it automatically, so it never ships |
-| `ghostty/` | terminal — config, cursor-tail shader. Reload config after edits with `cmd+shift+,` (symlinked config breaks the file watcher) |
-| `tmux/` | `tmux.conf` — plugins installed at runtime by TPM (`prefix + I` first run) |
-| `skhd/` | hotkey daemon — app-switching hotkeys |
-| `agents/` | cross-tool agent command templates |
-| `tig/` `vim/` | tool configs |
-| `Brewfile` | curated package list (24 formulae, 4 casks, 1 tap) |
-| `bootstrap.sh` | the setup script |
+| Folder | Links to | What |
+|---|---|---|
+| `zsh/` | `~/.zshenv`, `~/.zshrc`, `~/.zshrc.d/` | shell — env + PATH in `.zshenv`, interactive setup in `.zshrc`, add-ons in `.zshrc.d/` |
+| `git/` | `~/.config/git/` | identity, delta pager, `st` / `co` / `lg` aliases, gh as credential helper |
+| `nvim/` | `~/.config/nvim/` | editor — one file per plugin in `lua/plugins/` |
+| `tmux/` | `~/.config/tmux/` | prefix is `` ` ``; plugins installed by TPM into `plugins/` (gitignored) |
+| `ghostty/` | `~/.config/ghostty/` | terminal + cursor-trail shader |
+| `tig/` | `~/.config/tig/` | git TUI |
+| `ideavim/` | `~/.config/ideavim/` | vim keys in Android Studio |
+| `mise/` | `~/.config/mise/` | runtime versions (node, tree-sitter) |
+| `skhd/` | `~/.config/skhd/` | global hotkeys — `alt-1` Ghostty, `alt-2` Chrome |
+| `Brewfile` | — | every brew formula and app, grouped by purpose |
+| `bootstrap.sh` | — | new-machine setup |
 
-## Theming: every tool owns its colors
+Machine-only shell settings go in `~/.zshrc.d/local.zsh` — loaded automatically, gitignored.
 
-No central theme engine — each tool's colors live in its own package,
-next to its config:
+## Theme
 
-- **ghostty** — built-in `TokyoNight Night` theme, named by `theme =` in config
-- **tmux** — selection/pane-border colors inline in `tmux.conf` (status bar is fixed tokyo-night `night`)
-- **nvim** — tokyonight plugin, `nvim/.config/nvim/lua/plugins/tokyonight.lua`
+Tokyonight **night** everywhere: Ghostty's built-in theme, the `tokyonight.nvim`
+plugin, and the `tokyo-night-tmux` bar. Nothing to sync — each tool names it once.
 
-## Notes for future me
+## State that stays out of the repo
 
-- Ghostty: config edits need `cmd+shift+,` to apply (symlink → no file watcher)
-- macOS system fonts cover SF Pro / SF Mono / SF Symbols; don't install them
-- The archive of everything retired during the migration lives at
-  `~/dotfiles-archive/` (not committed)
+- tmux plugins → `~/.config/tmux/plugins/` (gitignored, reinstalled by bootstrap)
+- tmux sessions → `~/.local/share/tmux/resurrect/`
+- nvim plugins → `~/.local/share/nvim/` (versions pinned in `lazy-lock.json`)
 
 ## Credits
 
-Third-party components, with thanks:
-
-- **cursor-tail shader** — from [sahaj-b/ghostty-cursor-shaders](https://github.com/sahaj-b/ghostty-cursor-shaders); based on [Inigo Quilez's 2D SDF article](https://iquilezles.org/articles/distfunctions2d/)
-- **JetBrainsMono Nerd Font** — via the Brewfile cask ([JetBrains/JetBrainsMono](https://github.com/JetBrains/JetBrainsMono) + Nerd Font icons, OFL 1.1)
+- Cursor-trail shader — [sahaj-b/ghostty-cursor-shaders](https://github.com/sahaj-b/ghostty-cursor-shaders), based on [Inigo Quilez's 2D SDF article](https://iquilezles.org/articles/distfunctions2d/)
+- JetBrains Mono Nerd Font — [JetBrains/JetBrainsMono](https://github.com/JetBrains/JetBrainsMono) + Nerd Font icons (OFL 1.1)
 
 ## License
 
-[MIT](LICENSE) — my own configuration is free to use, copy, and adapt.
-Vendored third-party components remain under their original licenses (see Credits).
+[MIT](LICENSE). Vendored third-party pieces keep their own licenses.

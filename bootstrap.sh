@@ -150,10 +150,6 @@ ${B}One-time manual steps${N} (macOS insists on human clicks):
      (it appears there after its first run — this bootstrap counts as one)
   2. Optionally set ${B}Ghostty${N} as your default terminal
   3. Start a ${B}new terminal window${N} (picks up PATH: mise shims, aliases)
-  4. Ghostty ignores config edits while config lives behind a symlink —
-     reload after edits with ${B}cmd+shift+,${N}
-
-${D}Fonts need nothing: SF Pro/Mono are macOS system fonts; JetBrainsMono
-Nerd Font comes via the Brewfile.${N}
+  4. ${B}gh auth login${N} — git uses gh for GitHub credentials
 EOF
 exit $(( failed > 0 ? 1 : 0 ))
