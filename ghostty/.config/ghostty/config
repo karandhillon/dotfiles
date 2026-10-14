@@ -1,33 +1,19 @@
-# TokyoNight Night — ghostty BUILT-IN theme (Contents/Resources/ghostty/themes),
-# the official port of folke/tokyonight.nvim "night": verified bg #1a1b26 /
-# fg #c0caf5 / palette slots match the nvim palette exactly. Zero color
-# files in this repo — the terminal, editor, and tmux bar now share one
-# palette, and the tool itself ships it.
+# Theme: Ghostty's built-in TokyoNight Night — same palette as nvim and the tmux bar.
 theme = TokyoNight Night
 
-# Font — JetBrainsMono Nerd Font Mono: the "Mono" variant keeps every
-# glyph (icons included) on the terminal grid. Installed via Brewfile cask.
-# Icons (tmux tokyo-night bar, etc.) render from this font — Google Sans
-# Code had no icon glyphs and macOS font-fallback made them look padded.
-# Lighter/heavier faces available by naming them (e.g. "... Mono Light").
+# Font: the "Mono" Nerd Font variant keeps icon glyphs on the grid (Brewfile cask).
 font-family = JetBrainsMono Nerd Font Mono
 font-size = 18
 adjust-cell-height = 20%
 adjust-cursor-height = 20%
 font-synthetic-style = false
-font-style-bold = false
 
 # Window
-# NOTE: ~/.config/ghostty is a symlink into ~/dotfiles, which breaks Ghostty's config file-watcher — hot-reload doesn't work, so reload manually with cmd+shift+comma.
 title = " "
 macos-option-as-alt = true
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = hidden
 macos-window-shadow = false
-# Padding: values preserved from the retired yabai setup (grid math).
-# The grid remainders (3pt horizontal, 4pt vertical) are absorbed HERE:
-# x=7 per side (1694 = 11x154 cols), y=0 top (tmux bar flush) + 4 bottom
-# (1053 = 27x39 rows). No dead pixel strips.
 window-padding-x = 7
 window-padding-y = 0,4
 window-padding-color = extend
@@ -39,12 +25,12 @@ cursor-style-blink = true
 cursor-opacity = 0.8
 cursor-color = cell-foreground
 cursor-text = cell-background
-# cursor-invert-fg-bg = true
 shell-integration-features = no-cursor
 
 # Misc
 copy-on-select = clipboard
 mouse-hide-while-typing = true
 adjust-underline-position = 3
+# Config is a symlink into ~/dotfiles, so Ghostty can't watch it — reload manually.
 keybind = cmd+shift+comma=reload_config
 custom-shader = shaders/cursor_tail.glsl
