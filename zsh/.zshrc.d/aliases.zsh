@@ -1,6 +1,6 @@
 # Shell aliases.
-# git-only shortcuts live in .gitconfig (git st / co / lg); shell aliases go here.
-alias gco='git checkout'   # the one oh-my-zsh habit worth keeping (187 uses)
+# git shortcuts (git st / co / lg) live in git/.config/git/config.
+alias gco='git checkout'
 alias cat='bat'            # cat with syntax highlighting (plain: command cat)
 alias ls='eza -a --icons=always'     # ls with icons + git status (plain: command ls)
 alias vim='nvim'

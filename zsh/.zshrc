@@ -6,7 +6,7 @@ else
   compinit -C
 fi
 
-# completion behavior + interactive # comments (oh-my-zsh used to provide these)
+# completion behavior + allow # comments at the prompt
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 setopt interactive_comments
@@ -27,7 +27,7 @@ fi
 # ── prompt: the robbyrussell look, hand-rolled (➜ dir git:(branch)) ─────────
 # No dirty ✗ marker: a per-prompt `git status` costs ~260ms in big repos.
 # Ask `git st` / tig when you want to know — the prompt stays instant.
-setopt prompt_subst   # evaluate $(...) in PROMPT (omz used to enable this)
+setopt prompt_subst   # evaluate $(...) in PROMPT
 PROMPT='%(?:%F{green}➜:%F{red}➜%s) %F{cyan}%~%f $(git_prompt_info)'
 
 git_prompt_info() {
@@ -58,7 +58,6 @@ eval "$(mise activate zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 
 # ── modules: ~/.zshrc.d/*.zsh — drop a file in to add a module ──────────────
-# (graft's shell integration also installs itself here if ever re-enabled)
 for f in ~/.zshrc.d/*.zsh(N); do
   source "$f"
 done
@@ -66,5 +65,3 @@ done
 # ── zsh-autosuggestions (Fish-style gray suggestions from history) ──────────
 # Per upstream INSTALL.md (Homebrew): sourced at the END of .zshrc.
 source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-
-export PATH="$HOME/.local/bin:$PATH"

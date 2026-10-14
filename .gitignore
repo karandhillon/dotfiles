@@ -2,10 +2,8 @@
 *.swp
 *.orig
 
-# Work-specific zsh overlay — local only, never published.
-# Loaded by the ~/.zshrc.d/*.zsh drop-in loop.
-zsh/.zshrc.d/work.zsh
-zsh/.zshrc.d/android.zsh
+# Machine-only shell settings — sourced by the ~/.zshrc.d/*.zsh loop, never published.
+zsh/.zshrc.d/local.zsh
 
 # TPM-installed tmux plugins — recreated by bootstrap
 tmux/.config/tmux/plugins/
