@@ -1,4 +1,4 @@
-# tig settings
+# tig — git TUI. Reads ~/.config/tig/config.
 set refresh-mode = auto
 set wrap-lines = yes
 set line-graphics = utf-8
