@@ -67,3 +67,4 @@ done
 # Per upstream INSTALL.md (Homebrew): sourced at the END of .zshrc.
 source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
+export PATH="$HOME/.local/bin:$PATH"

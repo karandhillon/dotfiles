@@ -58,8 +58,7 @@ finish 0 "$(brew --version | head -1)"
 begin "trust third-party taps"
 rc=0
 brew trust asmvik/formulae >/dev/null 2>&1 || rc=1
-brew trust jetbrains/utils >/dev/null 2>&1 || rc=1
-finish $rc "asmvik (skhd) + jetbrains (kotlin-lsp)"
+finish $rc "asmvik (skhd)"
 
 # ── 3. packages ─────────────────────────────────────────────────────────────
 begin "brew bundle (packages, apps, fonts)"

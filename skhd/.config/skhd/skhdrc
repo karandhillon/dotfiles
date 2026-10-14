@@ -6,6 +6,4 @@
 # ---- app switching ---------------------------------------------------------
 # focuses the app if running, launches it if not
 alt - 1 : open -a "Ghostty"
-alt - 2 : open -a "Android Studio"
-alt - 3 : open -a "Firefox"
-alt - 4 : open -a "Slack"
+alt - 2 : open -a "Google Chrome"

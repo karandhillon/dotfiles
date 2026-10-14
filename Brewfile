@@ -2,11 +2,9 @@
 # Install with:  brew bundle --file ~/dotfiles/Brewfile
 # NOTE: brew refuses 3rd-party taps until trusted. Before the first bundle run:
 #   brew trust asmvik/formulae
-#   brew trust jetbrains/utils
 
 # ── taps ────────────────────────────────────────────────────────────────────
 tap "asmvik/formulae"      # skhd
-tap "jetbrains/utils"      # kotlin-lsp (official JetBrains Kotlin LSP)
 
 # ── hotkey daemon ───────────────────────────────────────────────────────────
 brew "asmvik/formulae/skhd"
@@ -38,6 +36,7 @@ brew "rsync"
 brew "socat"
 brew "fswatch"
 brew "neovim"
+brew "tmux"          # config in tmux/; plugins via TPM (bootstrap step 5)
 brew "hunk"
 
 # ── capture / media (screengif, screenshots) ───────────────────────────────
@@ -54,8 +53,9 @@ brew "mise"
 
 # ── LSP servers (brew-managed, on PATH for nvim) ────────────────────────────────
 # JetBrains' official Kotlin LSP (IntelliJ engine). Pre-alpha but weekly
-# releases; binary = brew symlink 'kotlin-lsp' → intellij-server.
-brew "kotlin-lsp"
+# releases. Official homebrew-cask; the jetbrains/utils tap fails to tap
+# (its formula has no Linux URL, which brew rejects).
+cask "kotlin-lsp"
 brew "tuicr"            # code-review TUI (vim keys, submits to GitHub/GitLab/…)
 
 # ── apps ────────────────────────────────────────────────────────────────────
